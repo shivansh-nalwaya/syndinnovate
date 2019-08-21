@@ -1,45 +1,22 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
-import { Button, Text } from "native-base";
+import Home from "./src/pages/Home";
+import Login from "./src/pages/Login";
+import Signup from "./src/pages/Signup";
+import { Router, Scene } from "react-native-router-flux";
 
-class App extends Component {
+class Routes extends Component {
   render() {
+    console.disableYellowBox = true;
     return (
-      <View style={styles.container}>
-        <Text style={styles.heading}>SYND iNNOVATE</Text>
-        <View style={styles.buttonContainer}>
-          <Button block style={styles.button}>
-            <Text>Login</Text>
-          </Button>
-          <Button block style={styles.button}>
-            <Text style={styles.buttonText}>Signup</Text>
-          </Button>
-        </View>
-      </View>
+      <Router>
+        <Scene key="root" hideNavBar={true}>
+          <Scene key="home" component={Home} initial={true} />
+          <Scene key="login" component={Login} />
+          <Scene key="signup" component={Signup} />
+        </Scene>
+      </Router>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 30,
-    justifyContent: "space-around",
-    alignItems: "center"
-  },
-  heading: {
-    justifyContent: "center",
-    fontSize: 30,
-    color: "#787878"
-  },
-  button: {
-    borderRadius: 10,
-    margin: 10,
-    backgroundColor: "#FF8C00"
-  },
-  buttonContainer: {
-    width: "100%"
-  }
-});
-
-export default App;
+export default Routes;
