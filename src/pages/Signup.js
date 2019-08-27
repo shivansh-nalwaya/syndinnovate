@@ -18,9 +18,9 @@ const IconButton = props => {
       style={{
         justifyContent: "center",
         alignItems: "center",
-        width: 36,
-        height: 36,
-        borderRadius: 36,
+        width: 44,
+        height: 44,
+        borderRadius: 44,
         backgroundColor: props.color
       }}
     >
@@ -28,7 +28,7 @@ const IconButton = props => {
         name={props.name}
         type="FontAwesome"
         style={{
-          fontSize: 18,
+          fontSize: 22,
           color: "white",
           textAlign: "center"
         }}
