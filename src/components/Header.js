@@ -1,9 +1,21 @@
-import { Body, Button, Header, Icon, Left, Right, Title } from "native-base";
+import {
+  Body,
+  Button,
+  Header,
+  Icon,
+  Left,
+  Right,
+  Title,
+  View
+} from "native-base";
 import React, { Component } from "react";
 import { StyleSheet } from "react-native";
+import ActionModel from "../models/ActionModel";
+import { observer } from "mobx-react";
 
-class Dashboard extends Component {
+class CustomHeader extends Component {
   render() {
+    if (ActionModel.hideHeaderFooter) return <View />;
     return (
       <Header style={styles.header}>
         <Left>
@@ -12,7 +24,7 @@ class Dashboard extends Component {
           </Button>
         </Left>
         <Body>
-          <Title>{this.props.title}</Title>
+          <Title>{this.props.title || "Home"}</Title>
         </Body>
         <Right>
           <Button transparent>
@@ -30,4 +42,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Dashboard;
+export default observer(CustomHeader);

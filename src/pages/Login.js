@@ -1,7 +1,7 @@
 import { Button, Card, CardItem, Input, Item, Label, Text } from "native-base";
 import React, { Component } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
-import { Actions } from "react-native-router-flux";
+import Actions from "../models/ActionModel";
 
 class Login extends Component {
   render() {
@@ -25,7 +25,11 @@ class Login extends Component {
             <Text style={styles.link}>Forgot password?</Text>
           </CardItem>
           <CardItem>
-            <Button block style={styles.button}>
+            <Button
+              block
+              style={styles.button}
+              onPress={() => Actions.jump("dashboard")}
+            >
               <Text>Login</Text>
             </Button>
           </CardItem>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import { Button, Text } from "native-base";
-import { Actions } from "react-native-router-flux";
+import Actions from "../models/ActionModel";
 
 class Home extends Component {
   render() {

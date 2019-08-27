@@ -10,7 +10,7 @@ import {
 } from "native-base";
 import React, { Component } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
-import { Actions } from "react-native-router-flux";
+import Actions from "../models/ActionModel";
 
 const IconButton = props => {
   return (

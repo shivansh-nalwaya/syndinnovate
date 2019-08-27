@@ -29,7 +29,6 @@ class Dashboard extends Component {
           </CardItem>
         </Card>
         <View style={styles.column}>
-          <Text style={styles.headingCenter}>New Referral</Text>
           <View style={styles.row}>
             <Box image={Images.SavingsAccount} title="Savings Account" />
             <Box image={Images.CreditCard} title="Credit Card" />
@@ -60,38 +59,36 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "black"
+    borderColor: "black",
+    borderRadius: 5,
+    backgroundColor: "white"
   },
   card: {
     width: "100%"
   },
   rewardItem: {
-    padding: 20,
+    padding: 16,
     backgroundColor: "#676767",
     justifyContent: "space-between"
   },
   leadItem: {
-    padding: 20,
+    padding: 16,
     justifyContent: "space-between"
   },
   rewardText: {
-    marginVertical: 10,
+    marginVertical: 6,
     color: "white",
-    fontSize: 18
+    fontSize: 16
   },
   leadText: {
-    marginVertical: 10,
-    fontSize: 18
+    marginVertical: 6,
+    fontSize: 16
   },
   textCenter: {
     textAlign: "center"
   },
-  headingCenter: {
-    textAlign: "center",
-    marginVertical: 10
-  },
   image: { height: 60, width: 60, marginBottom: 10 },
-  column: { flexDirection: "column" },
+  column: { flexDirection: "column", marginTop: 10 },
   row: { flexDirection: "row" }
 });
 
