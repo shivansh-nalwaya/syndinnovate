@@ -1,7 +1,9 @@
-import { Card, CardItem, Text } from "native-base";
+import { Card, CardItem, Text, Spinner } from "native-base";
 import React, { Component } from "react";
 import { StyleSheet, View, Image } from "react-native";
-import Images from "../images";
+import { extendObservable } from "mobx";
+import Categories from "../models/Categories";
+import { observer } from "mobx-react";
 
 class Box extends Component {
   render() {
@@ -15,7 +17,21 @@ class Box extends Component {
 }
 
 class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+    extendObservable(this, {
+      loading: true,
+      all: []
+    });
+    const c = new Categories();
+    c.all().then(res => {
+      this.all = res;
+      this.loading = false;
+    });
+  }
+
   render() {
+    if (this.loading) return <Spinner />;
     return (
       <View style={styles.container}>
         <Card style={styles.card}>
@@ -30,16 +46,9 @@ class Dashboard extends Component {
         </Card>
         <View style={styles.column}>
           <View style={styles.row}>
-            <Box image={Images.SavingsAccount} title="Savings Account" />
-            <Box image={Images.CreditCard} title="Credit Card" />
-          </View>
-          <View style={styles.row}>
-            <Box image={Images.HousingLoan} title="Housing Loan" />
-            <Box image={Images.PersonalLoan} title="Personal Loan" />
-          </View>
-          <View style={styles.row}>
-            <Box image={Images.InsurancePolicy} title="Insurance Policy" />
-            <Box image={Images.Others} title="Others" />
+            {this.all.map((c, i) => (
+              <Box key={i} image={c.image} title={c.title} />
+            ))}
           </View>
         </View>
       </View>
@@ -89,7 +98,7 @@ const styles = StyleSheet.create({
   },
   image: { height: 60, width: 60, marginBottom: 10 },
   column: { flexDirection: "column", marginTop: 10 },
-  row: { flexDirection: "row" }
+  row: { flexDirection: "row", flexWrap: "wrap" }
 });
 
-export default Dashboard;
+export default observer(Dashboard);
