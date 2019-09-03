@@ -55,7 +55,7 @@ const routes = [
     name: "Logout",
     icon: "sign-out",
     onPress: () => {
-      Sessions.logout();
+      Actions.jump("home");
     }
   }
 ];
@@ -75,11 +75,13 @@ class CustomHeader extends Component {
                 this.setState({ isOpen: !this.state.isOpen });
               }}
             >
-              <Icon name="menu" />
+              <Icon name={this.state.isOpen ? "close" : "menu"} />
             </Button>
           </Left>
           <Body>
-            <Title>{this.props.title || "Home"}</Title>
+            <Title>
+              {this.state.isOpen ? "Menu" : this.props.title || "Home"}
+            </Title>
           </Body>
           <Right>
             <Button transparent>
