@@ -80,7 +80,9 @@ class CustomHeader extends Component {
           </Left>
           <Body>
             <Title>
-              {this.state.isOpen ? "Menu" : this.props.title || "Home"}
+              {this.state.isOpen
+                ? "Menu"
+                : this.props.title || Actions.currentTitle}
             </Title>
           </Body>
           <Right>

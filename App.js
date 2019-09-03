@@ -22,10 +22,10 @@ export default class App extends Component {
             <Scene key="home" component={Home} hideNavBar />
             <Scene key="login" component={Login} hideNavBar />
             <Scene key="signup" component={Signup} hideNavBar />
-            <Scene key="dashboard" component={Dashboard} hideNavBar />
+            <Scene key="dashboard" component={Dashboard} hideNavBar initial />
             <Scene key="stats" component={Stats} hideNavBar />
             <Scene key="rewards" component={Rewards} hideNavBar />
-            <Scene key="profile" component={Profile} hideNavBar initial />
+            <Scene key="profile" component={Profile} hideNavBar />
           </Scene>
         </Router>
         <Footer />

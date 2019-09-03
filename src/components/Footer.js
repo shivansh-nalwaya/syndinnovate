@@ -1,8 +1,9 @@
 import { Button, Footer, FooterTab, Icon, Text, View } from "native-base";
 import React, { Component } from "react";
 import { StyleSheet } from "react-native";
-import ActionModel from "../models/ActionModel";
+import ActionModel, { tabs } from "../models/ActionModel";
 import { observer } from "mobx-react";
+import { extendObservable } from "mobx";
 
 class CustomFooter extends Component {
   render() {
@@ -10,26 +11,16 @@ class CustomFooter extends Component {
     return (
       <Footer>
         <FooterTab style={styles.footer}>
-          <Button vertical>
-            <Icon type="FontAwesome" style={styles.darkText} name="home" />
-            <Text style={styles.darkText}>Home</Text>
-          </Button>
-          <Button vertical>
-            <Icon
-              type="FontAwesome5"
-              style={styles.darkText}
-              name="chart-pie"
-            />
-            <Text style={styles.darkText}>Stats</Text>
-          </Button>
-          <Button vertical>
-            <Icon type="FontAwesome" style={styles.darkText} name="star-o" />
-            <Text style={styles.darkText}>Rewards</Text>
-          </Button>
-          <Button vertical>
-            <Icon type="FontAwesome" style={styles.darkText} name="user" />
-            <Text style={styles.darkText}>Profile</Text>
-          </Button>
+          {tabs.map(t => (
+            <Button
+              vertical
+              onPress={() => ActionModel.jump(t.action)}
+              style={ActionModel.current === t.action ? styles.activeTab : {}}
+            >
+              <Icon type="FontAwesome5" style={styles.darkText} name={t.icon} />
+              <Text style={styles.darkText}>{t.title}</Text>
+            </Button>
+          ))}
         </FooterTab>
       </Footer>
     );
@@ -37,7 +28,12 @@ class CustomFooter extends Component {
 }
 
 const styles = StyleSheet.create({
-  footer: { backgroundColor: "#FF8C00" },
+  footer: { backgroundColor: "#FF8C00", padding: 0 },
+  activeTab: {
+    backgroundColor: "#d87300",
+    borderColor: "#d87300",
+    borderWidth: 1.5
+  },
   darkText: { color: "black" }
 });
 
