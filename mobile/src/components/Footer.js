@@ -1,7 +1,7 @@
 import { Button, Footer, FooterTab, Icon, Text, View } from "native-base";
 import React, { Component } from "react";
 import { StyleSheet } from "react-native";
-import ActionModel, { tabs } from "../models/ActionModel";
+import ActionModel from "../models/ActionModel";
 import { observer } from "mobx-react";
 
 class CustomFooter extends Component {
