@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { StyleSheet } from "react-native";
 import ActionModel, { tabs } from "../models/ActionModel";
 import { observer } from "mobx-react";
-import { extendObservable } from "mobx";
 
 class CustomFooter extends Component {
   render() {
@@ -11,7 +10,7 @@ class CustomFooter extends Component {
     return (
       <Footer>
         <FooterTab style={styles.footer}>
-          {tabs.map(t => (
+          {ActionModel.tabs.map(t => (
             <Button
               vertical
               onPress={() => ActionModel.jump(t.action)}

@@ -1,51 +1,38 @@
-import { extendObservable, computed } from "mobx";
+import { observable, computed, decorate } from "mobx";
 import { Actions } from "react-native-router-flux";
-
-const FULL_PAGES = ["home", "login", "signup"];
-
-export const tabs = [
-  {
-    title: "Home",
-    icon: "home",
-    action: "dashboard"
-  },
-  {
-    title: "Stats",
-    icon: "chart-pie",
-    action: "stats"
-  },
-  {
-    title: "Rewards",
-    icon: "star",
-    action: "rewards"
-  },
-  {
-    title: "Profile",
-    icon: "user",
-    action: "profile"
-  }
-];
+import { ROUTES } from "../../Constants";
 
 class ActionModel {
-  constructor() {
-    extendObservable(this, {
-      current: Actions.current || "dashboard"
-    });
-  }
+  current = Actions.current || "dashboard";
 
   jump(scene, props = {}) {
     this.current = scene;
     Actions.jump(scene, props);
   }
 
+  get currentRoute() {
+    return ROUTES.filter(t => t.action === this.current)[0];
+  }
+
+  get tabs() {
+    return ROUTES.filter(r => r.footer);
+  }
+
   get hideHeaderFooter() {
-    return FULL_PAGES.includes(this.current);
+    return !this.currentRoute.header;
   }
 
   get currentTitle() {
-    return tabs.filter(t => t.action === this.current)[0].title;
+    return this.currentRoute.title;
   }
 }
+
+decorate(ActionModel, {
+  current: observable,
+  currentRoute: computed,
+  currentTitle: computed,
+  hideHeaderFooter: computed
+});
 
 const actionObj = new ActionModel();
 export default actionObj;

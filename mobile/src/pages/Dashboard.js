@@ -1,17 +1,21 @@
 import { Card, CardItem, Text, Spinner } from "native-base";
 import React, { Component } from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import { extendObservable } from "mobx";
 import Categories from "../models/Categories";
 import { observer } from "mobx-react";
+import ActionModel from "../models/ActionModel";
 
 class Box extends Component {
   render() {
     return (
-      <View style={styles.boxContainer}>
+      <TouchableOpacity
+        style={styles.boxContainer}
+        onPress={() => ActionModel.jump("form")}
+      >
         <Image source={this.props.image} style={styles.image} />
         <Text style={styles.textCenter}>{this.props.title}</Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
@@ -47,7 +51,7 @@ class Dashboard extends Component {
         <View style={styles.column}>
           <View style={styles.row}>
             {this.all.map((c, i) => (
-              <Box key={i} image={c.image} title={c.title} />
+              <Box key={i} id={c.id} image={c.image} title={c.title} />
             ))}
           </View>
         </View>

@@ -10,6 +10,7 @@ import Signup from "./src/pages/Signup";
 import Stats from "./src/pages/Stats";
 import Rewards from "./src/pages/Rewards";
 import Profile from "./src/pages/Profile";
+import Form from "./src/pages/Form";
 
 export default class App extends Component {
   render() {
@@ -18,14 +19,15 @@ export default class App extends Component {
       <Container>
         <Header />
         <Router>
-          <Scene key="root">
-            <Scene key="home" component={Home} hideNavBar />
-            <Scene key="login" component={Login} hideNavBar />
-            <Scene key="signup" component={Signup} hideNavBar />
-            <Scene key="dashboard" component={Dashboard} hideNavBar initial />
-            <Scene key="stats" component={Stats} hideNavBar />
-            <Scene key="rewards" component={Rewards} hideNavBar />
-            <Scene key="profile" component={Profile} hideNavBar />
+          <Scene key="root" hideNavBar>
+            <Scene key="home" component={Home} />
+            <Scene key="login" component={Login} />
+            <Scene key="signup" component={Signup} />
+            <Scene key="dashboard" component={Dashboard} initial />
+            <Scene key="form" component={Form} />
+            <Scene key="stats" component={Stats} />
+            <Scene key="rewards" component={Rewards} />
+            <Scene key="profile" component={Profile} />
           </Scene>
         </Router>
         <Footer />
