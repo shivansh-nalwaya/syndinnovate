@@ -4,14 +4,14 @@ import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import { extendObservable } from "mobx";
 import Categories from "../models/Categories";
 import { observer } from "mobx-react";
-import ActionModel from "../models/ActionModel";
+import { Actions } from "react-native-router-flux";
 
 class Box extends Component {
   render() {
     return (
       <TouchableOpacity
         style={styles.boxContainer}
-        onPress={() => ActionModel.jump("form")}
+        onPress={() => Actions.jump("form")}
       >
         <Image source={this.props.image} style={styles.image} />
         <Text style={styles.textCenter}>{this.props.title}</Text>

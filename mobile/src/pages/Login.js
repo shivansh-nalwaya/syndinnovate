@@ -10,7 +10,7 @@ import {
 } from "native-base";
 import React, { Component } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
-import Actions from "../models/ActionModel";
+import { Actions } from "react-native-router-flux";
 import { observer } from "mobx-react";
 import { decorate, observable } from "mobx";
 import Session from "../models/Session";
@@ -51,7 +51,7 @@ class Login extends Component {
                 Session.login({ email, password })
                   .then(res => {
                     this.loading = false;
-                    Actions.jump("admin");
+                    Actions.jump("page");
                   })
                   .catch(err => {
                     this.loading = false;

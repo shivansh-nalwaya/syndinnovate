@@ -15,7 +15,7 @@ import {
 } from "native-base";
 import React, { Component } from "react";
 import { StyleSheet, TouchableHighlight, Dimensions } from "react-native";
-import Actions from "../models/ActionModel";
+import { Actions } from "react-native-router-flux";
 import { observer } from "mobx-react";
 import styled from "styled-components";
 import posed from "react-native-pose";
@@ -66,7 +66,6 @@ class CustomHeader extends Component {
   state = { isOpen: false };
 
   render() {
-    if (Actions.hideHeaderFooter) return <View />;
     return (
       <React.Fragment>
         <Header style={styles.header}>
@@ -81,11 +80,7 @@ class CustomHeader extends Component {
             </Button>
           </Left>
           <Body>
-            <Title>
-              {this.state.isOpen
-                ? "Menu"
-                : this.props.title || Actions.currentTitle}
-            </Title>
+            <Title>{this.state.isOpen ? "Menu" : this.props.title}</Title>
           </Body>
           <Right>
             <Button transparent>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import { Button, Text, Spinner } from "native-base";
-import Actions from "../models/ActionModel";
+import { Actions } from "react-native-router-flux";
 import { observer } from "mobx-react";
 import Session from "../models/Session";
 import { decorate, observable } from "mobx";
