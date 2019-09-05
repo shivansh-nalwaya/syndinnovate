@@ -1,4 +1,4 @@
-import { BACKEND_URL } from "../../Constants";
+import Api from "./Api";
 
 class Session {
   constructor() {}
@@ -8,11 +8,7 @@ class Session {
   }
 
   login = body => {
-    console.log(body);
-    return fetch(`${BACKEND_URL}/authenticate`, {
-      method: "POST",
-      body: JSON.stringify(body)
-    });
+    return Api.call("authenticate", "POST", body);
   };
 }
 

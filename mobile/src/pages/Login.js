@@ -49,7 +49,6 @@ class Login extends Component {
                 this.loading = true;
                 const { email, password } = this;
                 Session.login({ email, password })
-                  .then(res => res.json())
                   .then(res => {
                     this.loading = false;
                     Actions.jump("dashboard");
