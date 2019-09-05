@@ -8,7 +8,7 @@ export default class Page extends Component {
     return (
       <Router navBar={Header}>
         <Scene key="root">
-          <Scene key="dashboard" component={Dashboard} />
+          <Scene key="dashboard" title="Home" component={Dashboard} />
         </Scene>
       </Router>
     );
