@@ -17,8 +17,8 @@ import Session from "../models/Session";
 
 class Login extends Component {
   loading = false;
-  email = "example@mail.com";
-  password = "123123123";
+  email = "admin@synd.com";
+  password = "12345678";
 
   render() {
     return (
