@@ -1,14 +1,21 @@
 import Api from "./Api";
+import { AsyncStorage } from "react-native";
 
 class Session {
   constructor() {}
 
   get isLoggedIn() {
-    return true;
+    return !!AsyncStorage.getItem("token");
   }
 
   login = body => {
-    return Api.call("authenticate", "POST", body);
+    return Api.call("authenticate", "POST", body).then(res => {
+      AsyncStorage.setItem("token", res.auth_token);
+    });
+  };
+
+  logout = () => {
+    AsyncStorage.clear();
   };
 }
 

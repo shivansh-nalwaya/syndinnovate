@@ -1,0 +1,2 @@
+class FormConfig < ApplicationRecord
+end
