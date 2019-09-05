@@ -1,15 +1,14 @@
+import { AsyncStorage } from "react-native";
 import { BACKEND_URL } from "../../Constants";
 
 class Api {
-  static token() {
-    return "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE1Njc3NzM1MTF9.HBvwUho8s356VopX2a6cx--BsGmu2qKbXmk3f5RZ16U";
-  }
+  static async call(url, method = "GET", body = {}) {
+    let token = await AsyncStorage.getItem("token");
 
-  static call = (url, method = "GET", body = {}) => {
     let fetchBody = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: this.token()
+        Authorization: token
       }
     };
     if (method === "POST") {
@@ -25,7 +24,7 @@ class Api {
         console.log("Error", err);
         throw "Error";
       });
-  };
+  }
 }
 
 export default Api;

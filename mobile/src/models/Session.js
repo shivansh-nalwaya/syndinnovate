@@ -2,8 +2,6 @@ import Api from "./Api";
 import { AsyncStorage } from "react-native";
 
 class Session {
-  constructor() {}
-
   get isLoggedIn() {
     return !!AsyncStorage.getItem("token");
   }

@@ -19,6 +19,7 @@ import Actions from "../models/ActionModel";
 import { observer } from "mobx-react";
 import styled from "styled-components";
 import posed from "react-native-pose";
+import Session from "../models/Session";
 
 const Box = posed.View({
   visible: {
@@ -55,6 +56,7 @@ const routes = [
     name: "Logout",
     icon: "sign-out",
     onPress: () => {
+      Session.logout();
       Actions.jump("home");
     }
   }
