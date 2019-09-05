@@ -1,9 +1,25 @@
-import { Button, Card, CardItem, Input, Item, Label, Text } from "native-base";
+import {
+  Button,
+  Card,
+  CardItem,
+  Input,
+  Item,
+  Label,
+  Text,
+  Spinner
+} from "native-base";
 import React, { Component } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import Actions from "../models/ActionModel";
+import { observer } from "mobx-react";
+import { decorate, observable } from "mobx";
+import Session from "../models/Session";
 
 class Login extends Component {
+  loading = false;
+  email = "";
+  password = "";
+
   render() {
     return (
       <View style={styles.container}>
@@ -12,13 +28,13 @@ class Login extends Component {
           <CardItem>
             <Item stackedLabel style={styles.formContainer}>
               <Label>Email or Contact</Label>
-              <Input />
+              <Input onChangeText={e => (this.email = e)} />
             </Item>
           </CardItem>
           <CardItem>
             <Item stackedLabel style={styles.formContainer}>
               <Label>Password</Label>
-              <Input />
+              <Input onChangeText={p => (this.password = p)} />
             </Item>
           </CardItem>
           <CardItem>
@@ -27,9 +43,23 @@ class Login extends Component {
           <CardItem>
             <Button
               block
+              disabled={this.loading}
               style={styles.button}
-              onPress={() => Actions.jump("dashboard")}
+              onPress={() => {
+                this.loading = true;
+                const { email, password } = this;
+                Session.login({ email, password })
+                  .then(res => res.json())
+                  .then(res => {
+                    this.loading = false;
+                    Actions.jump("dashboard");
+                  })
+                  .catch(err => {
+                    this.loading = false;
+                  });
+              }}
             >
+              {this.loading && <Spinner color="black" />}
               <Text>Login</Text>
             </Button>
           </CardItem>
@@ -80,4 +110,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Login;
+decorate(Login, {
+  loading: observable,
+  email: observable,
+  password: observable
+});
+
+export default observer(Login);

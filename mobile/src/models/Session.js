@@ -1,4 +1,4 @@
-import { observable } from "mobx";
+import { BACKEND_URL } from "../../Constants";
 
 class Session {
   constructor() {}
@@ -7,8 +7,12 @@ class Session {
     return true;
   }
 
-  login = () => {
-    return Promise.resolve;
+  login = body => {
+    console.log(body);
+    return fetch(`${BACKEND_URL}/authenticate`, {
+      method: "POST",
+      body: JSON.stringify(body)
+    });
   };
 }
 
