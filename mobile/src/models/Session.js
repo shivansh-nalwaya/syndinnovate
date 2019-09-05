@@ -3,7 +3,7 @@ import { AsyncStorage } from "react-native";
 
 class Session {
   get isLoggedIn() {
-    return !!AsyncStorage.getItem("token");
+    return AsyncStorage.getItem("token");
   }
 
   login = body => {

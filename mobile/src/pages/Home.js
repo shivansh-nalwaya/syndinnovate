@@ -1,29 +1,45 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
-import { Button, Text } from "native-base";
+import { Button, Text, Spinner } from "native-base";
 import Actions from "../models/ActionModel";
+import { observer } from "mobx-react";
+import Session from "../models/Session";
+import { decorate, observable } from "mobx";
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.loading = true;
+    Session.isLoggedIn.then(res => {
+      if (res) Actions.jump("dashboard");
+      this.loading = false;
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>SYND iNNOVATE</Text>
-        <View style={styles.buttonContainer}>
-          <Button
-            block
-            style={styles.button}
-            onPress={() => Actions.jump("login")}
-          >
-            <Text>Login</Text>
-          </Button>
-          <Button
-            block
-            style={styles.button}
-            onPress={() => Actions.jump("signup")}
-          >
-            <Text style={styles.buttonText}>Signup</Text>
-          </Button>
-        </View>
+        {this.loading ? (
+          <Spinner></Spinner>
+        ) : (
+          <View style={styles.buttonContainer}>
+            <Button
+              block
+              style={styles.button}
+              onPress={() => Actions.jump("login")}
+            >
+              <Text>Login</Text>
+            </Button>
+            <Button
+              block
+              style={styles.button}
+              onPress={() => Actions.jump("signup")}
+            >
+              <Text style={styles.buttonText}>Signup</Text>
+            </Button>
+          </View>
+        )}
       </View>
     );
   }
@@ -51,4 +67,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Home;
+decorate(Home, {
+  loading: observable
+});
+
+export default observer(Home);

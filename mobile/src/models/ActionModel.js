@@ -3,7 +3,7 @@ import { Actions } from "react-native-router-flux";
 import { ROUTES } from "../../Constants";
 
 class ActionModel {
-  current = Actions.current || "dashboard";
+  current = Actions.current || "home";
 
   jump(scene, props = {}) {
     this.current = scene;

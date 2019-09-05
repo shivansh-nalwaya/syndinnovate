@@ -10,9 +10,10 @@ class CustomFooter extends Component {
     return (
       <Footer>
         <FooterTab style={styles.footer}>
-          {ActionModel.tabs.map(t => (
+          {ActionModel.tabs.map((t, i) => (
             <Button
               vertical
+              key={i}
               onPress={() => ActionModel.jump(t.action)}
               style={ActionModel.current === t.action ? styles.activeTab : {}}
             >
