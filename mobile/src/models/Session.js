@@ -1,19 +1,19 @@
 import Api from "./Api";
-import { AsyncStorage } from "react-native";
+import SyncStorage from "sync-storage";
 
 class Session {
   get isLoggedIn() {
-    return AsyncStorage.getItem("token");
+    return !!SyncStorage.get("token");
   }
 
   login = body => {
     return Api.call("authenticate", "POST", body).then(res => {
-      AsyncStorage.setItem("token", res.auth_token);
+      SyncStorage.set("token", res.auth_token);
     });
   };
 
   logout = () => {
-    AsyncStorage.clear();
+    SyncStorage.remove("token");
   };
 }
 

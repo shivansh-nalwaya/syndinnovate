@@ -1,9 +1,9 @@
-import { AsyncStorage } from "react-native";
 import { BACKEND_URL } from "../../Constants";
+import SyncStorage from "sync-storage";
 
 class Api {
   static async call(url, method = "GET", body = {}) {
-    let token = await AsyncStorage.getItem("token");
+    let token = SyncStorage.get("token");
 
     let fetchBody = {
       headers: {
