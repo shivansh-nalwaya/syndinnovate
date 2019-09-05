@@ -9,7 +9,7 @@ import { decorate, observable } from "mobx";
 class Home extends Component {
   constructor(props) {
     super(props);
-    if (Session.isLoggedIn) Actions.jump("dashboard");
+    if (Session.isLoggedIn) Actions.jump("admin");
   }
 
   render() {

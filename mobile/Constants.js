@@ -6,6 +6,7 @@ import Stats from "./src/pages/Stats";
 import Rewards from "./src/pages/Rewards";
 import Profile from "./src/pages/Profile";
 import Form from "./src/pages/Form";
+import Admin from "./src/admin/index";
 
 export const BACKEND_URL = "http://192.168.0.109:9999/";
 
@@ -21,6 +22,13 @@ export const ROUTES = [
   {
     action: "signup",
     component: Signup
+  },
+  {
+    title: "Admin Dashboard",
+    action: "admin",
+    component: Admin,
+    header: true,
+    footer: false
   },
   {
     title: "Home",
