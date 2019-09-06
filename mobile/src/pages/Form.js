@@ -1,6 +1,6 @@
-import { decorate, observable } from "mobx";
+import { decorate, observable, computed } from "mobx";
 import { observer } from "mobx-react";
-import { Container, Button, Text } from "native-base";
+import { Container, Button, Text, Spinner } from "native-base";
 import React, { Component } from "react";
 import { ScrollView, View, Keyboard, findNodeHandle } from "react-native";
 import styled from "styled-components";
@@ -12,6 +12,7 @@ import DateInput from "./FormItems/DateInput";
 import ImageInput from "./FormItems/ImageInput";
 import TextareaInput from "./FormItems/TextareaInput";
 import _ from "lodash";
+import FormModel from "../models/Forms";
 
 const PaddedContent = styled(Container)``;
 
@@ -40,29 +41,24 @@ const FooterText = styled(Text)`
 `;
 
 class FormExample extends Component {
-  items = [
-    { type: "text", title: "Name", required: true },
-    { type: "number", title: "Contact", required: true },
-    { type: "date", title: "Date of birth", required: true },
-    { type: "textarea", title: "Address", required: true },
-    { type: "image", title: "Aadhaar Image", required: true },
-    {
-      type: "select",
-      title: "Gender",
-      required: true,
-      options: ["Male", "Female"]
-    },
-    {
-      type: "multi-select",
-      title: "Langauges",
-      required: false,
-      options: ["English", "Hindi"]
-    }
-  ];
+  items = [];
+  loading = true;
   current = 0;
-  lastIndex = this.items.length - 1;
   itemRefs = [];
   lead = {};
+
+  constructor(props) {
+    super(props);
+    this.form_id = props.navigation.state.params.form_id;
+    FormModel.find(this.form_id).then(res => {
+      this.items = res.form_config.config || [];
+      this.loading = false;
+    });
+  }
+
+  get lastIndex() {
+    return this.items.length - 1;
+  }
 
   nextIndex = () => {
     this.current += 1;
@@ -90,6 +86,7 @@ class FormExample extends Component {
   };
 
   render() {
+    if (this.loading) return <Spinner />;
     return (
       <PaddedContent>
         <ScrollView ref={view => (this._scrollView = view)}>
@@ -159,6 +156,11 @@ class FormExample extends Component {
   }
 }
 
-decorate(FormExample, { current: observable });
+decorate(FormExample, {
+  current: observable,
+  loading: observable,
+  items: observable,
+  lastIndex: computed
+});
 
 export default observer(FormExample);

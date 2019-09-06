@@ -15,8 +15,8 @@ import {
   Header,
   Body,
   Title,
-  Left,
-  Textarea
+  Textarea,
+  Spinner
 } from "native-base";
 import styled from "styled-components";
 import TextInput from "./FormItems/TextInput";
@@ -27,6 +27,7 @@ import DateInput from "./FormItems/DateInput";
 import ImageInput from "./FormItems/ImageInput";
 import TextareaInput from "./FormItems/TextareaInput";
 import _ from "lodash";
+import FormModel from "../models/Forms";
 
 const PaddedContent = styled(Container)`
   background-color: ${props =>
@@ -113,11 +114,17 @@ class InnerModal extends Component {
               }}
             >
               <View style={{ flexDirection: "row" }}>
-                <Radio selected={this.required} />
+                <Radio
+                  selected={this.required}
+                  onPress={() => (this.required = true)}
+                />
                 <Text> Yes</Text>
               </View>
               <View style={{ flexDirection: "row" }}>
-                <Radio selected={!this.required} />
+                <Radio
+                  selected={!this.required}
+                  onPress={() => (this.required = false)}
+                />
                 <Text> No</Text>
               </View>
             </View>
@@ -160,18 +167,25 @@ decorate(InnerModal, {
 const ModalForm = observer(InnerModal);
 
 class FormExample extends Component {
-  items = [
-    { type: "text", title: "Name", required: true },
-    { type: "number", title: "Contact", required: true }
-  ];
-
+  items = [];
+  loading = true;
   modalVisible = false;
+
+  constructor(props) {
+    super(props);
+    this.form_id = props.navigation.state.params.form_id;
+    FormModel.find(this.form_id).then(res => {
+      this.items = res.form_config.config || [];
+      this.loading = false;
+    });
+  }
 
   setModalVisible = visible => {
     this.modalVisible = visible;
   };
 
   render() {
+    if (this.loading) return <Spinner />;
     return (
       <PaddedContent backgrounded={this.modalVisible}>
         <Modal
@@ -231,7 +245,12 @@ class FormExample extends Component {
           <FooterButton bordered onPress={() => this.setModalVisible(true)}>
             <FooterText>ADD FIELD</FooterText>
           </FooterButton>
-          <FooterButton bordered onPress={this.nextIndex}>
+          <FooterButton
+            bordered
+            onPress={() =>
+              FormModel.update(this.form_id, { config: this.items })
+            }
+          >
             <FooterText>SAVE</FooterText>
           </FooterButton>
         </BlackFooter>
@@ -240,6 +259,10 @@ class FormExample extends Component {
   }
 }
 
-decorate(FormExample, { modalVisible: observable, items: observable });
+decorate(FormExample, {
+  modalVisible: observable,
+  items: observable,
+  loading: observable
+});
 
 export default observer(FormExample);

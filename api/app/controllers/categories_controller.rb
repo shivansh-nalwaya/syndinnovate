@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   def index
-    render json: { categories: Category.all }
+    render json: { categories: Category.all.as_json(include: :form_config) }
   end
 
   def create

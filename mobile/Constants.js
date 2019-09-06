@@ -8,7 +8,7 @@ import Profile from "./src/pages/Profile";
 import Form from "./src/pages/Form";
 import Admin from "./src/admin/index";
 
-export const BACKEND_URL = "http://192.168.1.36:9999/";
+export const BACKEND_URL = "http://192.168.0.109:9999/";
 
 export const ROUTES = [
   {

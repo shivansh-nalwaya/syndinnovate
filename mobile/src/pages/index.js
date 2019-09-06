@@ -10,7 +10,7 @@ export default class Page extends Component {
       <Router navBar={Header}>
         <Scene key="root">
           <Scene key="dashboard" title="Home" component={Dashboard} />
-          <Scene key="form" title="Form" component={Form} initial />
+          <Scene key="form" title="Form" component={Form} />
         </Scene>
       </Router>
     );

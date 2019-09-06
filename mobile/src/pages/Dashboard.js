@@ -11,7 +11,11 @@ class Box extends Component {
     return (
       <TouchableOpacity
         style={styles.boxContainer}
-        onPress={() => Actions.jump("form")}
+        onPress={() =>
+          Actions.jump("form", {
+            form_id: this.props.form_id
+          })
+        }
       >
         <Image source={this.props.image} style={styles.image} />
         <Text style={styles.textCenter}>{this.props.title}</Text>
@@ -50,7 +54,13 @@ class Dashboard extends Component {
         <View style={styles.column}>
           <View style={styles.row}>
             {this.all.map((c, i) => (
-              <Box key={i} id={c.id} image={c.image} title={c.title} />
+              <Box
+                key={i}
+                id={c.id}
+                image={c.image}
+                title={c.title}
+                form_id={c.form_config.id}
+              />
             ))}
           </View>
         </View>
