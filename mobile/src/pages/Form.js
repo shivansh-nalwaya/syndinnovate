@@ -9,6 +9,8 @@ import SelectInput from "./FormItems/SelectInput";
 import CheckboxInput from "./FormItems/CheckboxInput";
 import NumberInput from "./FormItems/NumberInput";
 import DateInput from "./FormItems/DateInput";
+import ImageInput from "./FormItems/ImageInput";
+import TextareaInput from "./FormItems/TextareaInput";
 
 const PaddedContent = styled(Container)``;
 
@@ -41,6 +43,8 @@ class FormExample extends Component {
     { type: "text", title: "Name", required: true },
     { type: "number", title: "Contact", required: true },
     { type: "date", title: "Date of birth", required: true },
+    { type: "textarea", title: "Address", required: true },
+    { type: "image", title: "Aadhaar Image", required: true },
     {
       type: "select",
       title: "Gender",
@@ -80,6 +84,9 @@ class FormExample extends Component {
               case "date":
                 Elem = DateInput;
                 break;
+              case "image":
+                Elem = ImageInput;
+                break;
               case "select":
                 Elem = SelectInput;
                 customProps["options"] = item.options;
@@ -87,6 +94,9 @@ class FormExample extends Component {
               case "multi-select":
                 Elem = CheckboxInput;
                 customProps["options"] = item.options;
+                break;
+              case "textarea":
+                Elem = TextareaInput;
                 break;
             }
             return (
