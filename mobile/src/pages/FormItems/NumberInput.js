@@ -32,6 +32,7 @@ class NumberInput extends Component {
           onChangeText={this.props.onChange}
           keyboardType="numeric"
           placeholder={item.title}
+          onSubmitEditing={this.props.onDone}
         />
       </React.Fragment>
     );

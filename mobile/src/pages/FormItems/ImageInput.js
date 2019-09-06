@@ -9,14 +9,14 @@ const RedText = styled(Text)`
 `;
 
 const OuterView = styled(View)`
-  border-width: 1;
-  border-color: "#22CCC2";
-  padding: 2;
-  width: 150;
-  height: 150;
+  border-width: 1px;
+  border-color: #22ccc2;
+  padding: 2px;
+  width: 150px;
+  height: 150px;
   flex: 1;
-  justify-content: "center";
-  align-items: "center";
+  justify-content: center;
+  align-items: center;
 `;
 
 const InImage = styled(Image)`

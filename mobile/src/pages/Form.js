@@ -2,7 +2,7 @@ import { decorate, observable } from "mobx";
 import { observer } from "mobx-react";
 import { Container, Button, Text } from "native-base";
 import React, { Component } from "react";
-import { ScrollView, View, Keyboard } from "react-native";
+import { ScrollView, View, Keyboard, findNodeHandle } from "react-native";
 import styled from "styled-components";
 import TextInput from "./FormItems/TextInput";
 import SelectInput from "./FormItems/SelectInput";
@@ -61,19 +61,38 @@ class FormExample extends Component {
   ];
   current = 0;
   lastIndex = this.items.length - 1;
+  itemRefs = [];
   lead = {};
 
   nextIndex = () => {
     this.current += 1;
+    if (this.current > this.lastIndex) this.current = this.lastIndex;
     if (!["text", "number", "textarea"].includes(this.items[this.current].type))
       Keyboard.dismiss();
-    if (this.current > this.lastIndex) this.current = this.lastIndex;
+    this.scrollToItem();
+  };
+
+  scrollToItem = () => {
+    requestAnimationFrame(() => {
+      if (this.itemRefs[this.current] && this._scrollView) {
+        this.itemRefs[this.current].measureLayout(
+          findNodeHandle(this._scrollView),
+          (x, y) => {
+            this._scrollView.scrollTo({
+              x: 0,
+              y: y,
+              animated: true
+            });
+          }
+        );
+      }
+    });
   };
 
   render() {
     return (
       <PaddedContent>
-        <ScrollView>
+        <ScrollView ref={view => (this._scrollView = view)}>
           {this.items.map((item, index) => {
             let Elem = TextInput;
             let customProps = {
@@ -82,6 +101,7 @@ class FormExample extends Component {
                 _.delay(this.nextIndex, 200);
               },
               onChange: val => {
+                this.current = index;
                 _.set(this.lead, item, val);
               }
             };
@@ -111,7 +131,11 @@ class FormExample extends Component {
                 break;
             }
             return (
-              <StyledView current={this.current == index}>
+              <StyledView
+                key={index}
+                current={this.current == index}
+                ref={ele => (this.itemRefs[index] = ele)}
+              >
                 <Elem {...customProps} focus={this.current == index}></Elem>
               </StyledView>
             );
