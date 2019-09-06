@@ -1,7 +1,6 @@
 import { Icon, Label, Text } from "native-base";
 import React, { Component } from "react";
-import { Image, Platform, TouchableOpacity, View } from "react-native";
-import ImagePicker from "react-native-image-picker";
+import { Image, TouchableOpacity, View } from "react-native";
 import styled from "styled-components";
 
 const RedText = styled(Text)`
@@ -25,34 +24,6 @@ const InImage = styled(Image)`
 `;
 
 class ImageInput extends Component {
-  state = { value: this.props.value || "" };
-
-  onPress = () => {
-    const options = {
-      title: `Select ${this.props.item.title}`,
-      storageOptions: {
-        skipBackup: true,
-        path: "images"
-      }
-    };
-
-    ImagePicker.showImagePicker(options, response => {
-      if (response.didCancel) {
-        console.log("User cancelled image picker");
-      } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error);
-      } else {
-        const uri =
-          Platform.OS === "android"
-            ? response.uri
-            : response.uri.replace("file://", "");
-        this.setState({ value: uri });
-        this.props.onChange(uri);
-        this.props.onDone();
-      }
-    });
-  };
-
   render() {
     const item = this.props.item;
     return (
@@ -61,7 +32,7 @@ class ImageInput extends Component {
           {item.title}
           <RedText>{item.required ? "*" : ""}</RedText>
         </Label>
-        <Uploader onPress={this.onPress} value={this.state.value} />
+        <Uploader />
       </React.Fragment>
     );
   }
