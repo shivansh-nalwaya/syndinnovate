@@ -40,13 +40,13 @@ ActiveRecord::Schema.define(version: 2019_09_05_101829) do
     t.string "title"
     t.string "icon"
     t.integer "reward_points"
-    t.integer "form_config_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "form_configs", force: :cascade do |t|
     t.jsonb "config"
+    t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

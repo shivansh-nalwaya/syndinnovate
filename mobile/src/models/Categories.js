@@ -6,8 +6,14 @@ class Categories {
     return Api.call("categories").then(res => res.categories);
   }
 
-  create(data) {
+  create_or_update(data) {
+    if (!!data.id) return this.update(data.id, data);
     return Api.call("categories", "POST", data);
+  }
+
+  update(id, data) {
+    delete data.id;
+    return Api.call(`categories/${id}`, "PUT", data);
   }
 }
 

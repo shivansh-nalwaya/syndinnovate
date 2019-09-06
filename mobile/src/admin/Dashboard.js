@@ -42,7 +42,12 @@ class AdminDashboard extends Component {
                 <Text>{x.title}</Text>
               </Left>
               <Right>
-                <Icon type="FontAwesome5" name="edit"></Icon>
+                <Button
+                  transparent
+                  onPress={() => Actions.jump("category", { category: x })}
+                >
+                  <Icon type="FontAwesome5" name="edit"></Icon>
+                </Button>
               </Right>
             </ListItem>
           ))}

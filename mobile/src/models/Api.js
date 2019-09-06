@@ -11,7 +11,7 @@ class Api {
         Authorization: token
       }
     };
-    if (method === "POST") {
+    if (method !== "GET") {
       fetchBody["method"] = method;
       fetchBody["body"] = JSON.stringify(body);
     }
