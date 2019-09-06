@@ -14,6 +14,10 @@ const StyledInput = styled(Input)`
 `;
 
 class NumberInput extends Component {
+  componentDidUpdate() {
+    if (this.props.focus) this.inputRef._root.focus();
+  }
+
   render() {
     const item = this.props.item;
     return (
@@ -22,7 +26,12 @@ class NumberInput extends Component {
           {item.title}
           <RedText>{item.required ? "*" : ""}</RedText>
         </Label>
-        <StyledInput keyboardType="numeric" placeholder={item.title} />
+        <StyledInput
+          ref={ref => (this.inputRef = ref)}
+          autoFocus={this.props.focus}
+          keyboardType="numeric"
+          placeholder={item.title}
+        />
       </React.Fragment>
     );
   }

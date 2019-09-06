@@ -73,7 +73,7 @@ class FormExample extends Component {
         <ScrollView>
           {this.items.map((item, index) => {
             let Elem = TextInput;
-            let customProps = { item };
+            let customProps = { item, onDone: this.nextIndex };
             switch (item.type) {
               case "text":
                 Elem = TextInput;
@@ -101,7 +101,7 @@ class FormExample extends Component {
             }
             return (
               <StyledView current={this.current == index}>
-                <Elem {...customProps}></Elem>
+                <Elem {...customProps} focus={this.current == index}></Elem>
               </StyledView>
             );
           })}
@@ -116,8 +116,6 @@ class FormExample extends Component {
   }
 }
 
-decorate(FormExample, {
-  current: observable
-});
+decorate(FormExample, { current: observable });
 
 export default observer(FormExample);
