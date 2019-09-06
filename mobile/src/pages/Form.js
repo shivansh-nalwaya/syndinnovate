@@ -102,7 +102,7 @@ class FormExample extends Component {
               },
               onChange: val => {
                 this.current = index;
-                _.set(this.lead, item, val);
+                _.set(this.lead, item.title, val);
               }
             };
             switch (item.type) {
@@ -144,6 +144,14 @@ class FormExample extends Component {
         <BlackFooter>
           <FooterButton bordered onPress={this.nextIndex}>
             <FooterText>NEXT</FooterText>
+          </FooterButton>
+          <FooterButton
+            bordered
+            onPress={() => {
+              console.log(this.lead);
+            }}
+          >
+            <FooterText>SUBMIT</FooterText>
           </FooterButton>
         </BlackFooter>
       </PaddedContent>
