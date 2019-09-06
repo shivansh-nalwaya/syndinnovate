@@ -9,13 +9,6 @@ const RedText = styled(Text)`
   color: red;
 `;
 
-const StyledInput = styled(Input)`
-  border-width: 1;
-  border-color: #898989;
-  margin: 5px;
-  background-color: transparent;
-`;
-
 class ImageInput extends Component {
   state = { value: this.props.value || "" };
 
@@ -39,6 +32,8 @@ class ImageInput extends Component {
             ? response.uri
             : response.uri.replace("file://", "");
         this.setState({ value: uri });
+        this.props.onChange(uri);
+        this.props.onDone();
       }
     });
   };

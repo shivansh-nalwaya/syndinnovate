@@ -2,7 +2,7 @@ import { decorate, observable } from "mobx";
 import { observer } from "mobx-react";
 import { Container, Button, Text } from "native-base";
 import React, { Component } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, Keyboard } from "react-native";
 import styled from "styled-components";
 import TextInput from "./FormItems/TextInput";
 import SelectInput from "./FormItems/SelectInput";
@@ -11,6 +11,7 @@ import NumberInput from "./FormItems/NumberInput";
 import DateInput from "./FormItems/DateInput";
 import ImageInput from "./FormItems/ImageInput";
 import TextareaInput from "./FormItems/TextareaInput";
+import _ from "lodash";
 
 const PaddedContent = styled(Container)``;
 
@@ -59,11 +60,13 @@ class FormExample extends Component {
     }
   ];
   current = 0;
-
   lastIndex = this.items.length - 1;
+  lead = {};
 
   nextIndex = () => {
     this.current += 1;
+    if (!["text", "number", "textarea"].includes(this.items[this.current].type))
+      Keyboard.dismiss();
     if (this.current > this.lastIndex) this.current = this.lastIndex;
   };
 
@@ -73,7 +76,15 @@ class FormExample extends Component {
         <ScrollView>
           {this.items.map((item, index) => {
             let Elem = TextInput;
-            let customProps = { item, onDone: this.nextIndex };
+            let customProps = {
+              item,
+              onDone: () => {
+                _.delay(this.nextIndex, 200);
+              },
+              onChange: val => {
+                _.set(this.lead, item, val);
+              }
+            };
             switch (item.type) {
               case "text":
                 Elem = TextInput;

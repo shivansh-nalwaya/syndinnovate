@@ -14,6 +14,10 @@ const StyledInput = styled(Textarea)`
 `;
 
 class TextareaInput extends Component {
+  componentDidUpdate() {
+    if (this.props.focus) this.inputRef._root.focus();
+  }
+
   render() {
     const item = this.props.item;
     return (
@@ -22,7 +26,13 @@ class TextareaInput extends Component {
           {item.title}
           <RedText>{item.required ? "*" : ""}</RedText>
         </Label>
-        <StyledInput placeholder={item.title} />
+        <StyledInput
+          ref={ref => (this.inputRef = ref)}
+          autoFocus={this.props.focus}
+          onChangeText={this.props.onChange}
+          placeholder={item.title}
+          onSubmitEditing={this.props.onDone}
+        />
       </React.Fragment>
     );
   }

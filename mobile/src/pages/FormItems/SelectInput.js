@@ -11,6 +11,8 @@ class SelectInput extends Component {
 
   selectValue = value => {
     this.setState({ selected: value });
+    this.props.onChange(value);
+    this.props.onDone();
   };
 
   selectedValue = opt => {

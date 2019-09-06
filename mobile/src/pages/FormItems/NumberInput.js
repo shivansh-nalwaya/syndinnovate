@@ -29,6 +29,7 @@ class NumberInput extends Component {
         <StyledInput
           ref={ref => (this.inputRef = ref)}
           autoFocus={this.props.focus}
+          onChangeText={this.props.onChange}
           keyboardType="numeric"
           placeholder={item.title}
         />

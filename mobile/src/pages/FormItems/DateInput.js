@@ -19,7 +19,10 @@ class DateInput extends Component {
           locale={"en"}
           androidMode={"default"}
           placeHolderText={item.title}
-          onDateChange={this.setDate}
+          onDateChange={date => {
+            this.props.onChange(date);
+            this.props.onDone();
+          }}
         />
       </React.Fragment>
     );

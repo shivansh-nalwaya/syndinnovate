@@ -22,6 +22,7 @@ class CheckboxInput extends Component {
     if (selected.includes(value)) selected.splice(selected.indexOf(value), 1);
     else selected = selected.concat(value);
     this.setState({ selected });
+    this.props.onChange(this.state.selected);
   };
 
   selectedValue = opt => {

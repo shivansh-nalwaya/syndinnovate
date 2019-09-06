@@ -29,6 +29,7 @@ class Textnput extends Component {
         <StyledInput
           ref={ref => (this.inputRef = ref)}
           autoFocus={this.props.focus}
+          onChangeText={this.props.onChange}
           placeholder={item.title}
           onSubmitEditing={this.props.onDone}
         />
