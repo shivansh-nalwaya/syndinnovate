@@ -5,7 +5,11 @@ class CategoriesController < ApplicationController
 
   def create
     category = Category.create(category_params)
-    form_config = FormConfig.new(config: [], category_id: category.id)
+    form_config = FormConfig.new(
+      config: [{ type: "text", title: "Name", required: true, default: true },
+               { type: "number", title: "Contact", required: true, default: true }],
+      category_id: category.id,
+    )
     if form_config.save
       render json: { category: category.as_json(include: :form_config) }
     else

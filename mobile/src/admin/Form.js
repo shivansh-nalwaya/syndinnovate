@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from "react";
-import { Modal, View, Alert, ScrollView } from "react-native";
+import React, { Component } from "react";
+import { Modal, View, TouchableOpacity, ScrollView } from "react-native";
 import { decorate, observable } from "mobx";
 import { observer } from "mobx-react";
 import {
@@ -16,7 +16,8 @@ import {
   Body,
   Title,
   Textarea,
-  Spinner
+  Spinner,
+  Icon
 } from "native-base";
 import styled from "styled-components";
 import TextInput from "./FormItems/TextInput";
@@ -61,6 +62,20 @@ const StyledModal = styled(View)`
   background-color: white;
   z-index: 100;
   height: 400px;
+`;
+
+const CrossButton = styled(TouchableOpacity)`
+  position: absolute;
+  right: 7px;
+  top: 20px;
+  width: 26px;
+  height: 26px;
+  border-radius: 32px;
+  background-color: #d8003a;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
 `;
 
 class InnerModal extends Component {
@@ -236,6 +251,18 @@ class FormExample extends Component {
             }
             return (
               <StyledView key={index}>
+                {item.default || (
+                  <CrossButton
+                    onPress={() => {
+                      this.items.splice(index, 1);
+                    }}
+                  >
+                    <Icon
+                      name="md-close"
+                      style={{ color: "white", fontSize: 16 }}
+                    />
+                  </CrossButton>
+                )}
                 <Elem {...customProps}></Elem>
               </StyledView>
             );
