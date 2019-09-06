@@ -8,6 +8,7 @@ import TextInput from "./FormItems/TextInput";
 import SelectInput from "./FormItems/SelectInput";
 import CheckboxInput from "./FormItems/CheckboxInput";
 import NumberInput from "./FormItems/NumberInput";
+import DateInput from "./FormItems/DateInput";
 
 const PaddedContent = styled(Container)``;
 
@@ -39,6 +40,7 @@ class FormExample extends Component {
   items = [
     { type: "text", title: "Name", required: true },
     { type: "number", title: "Contact", required: true },
+    { type: "date", title: "Date of birth", required: true },
     {
       type: "select",
       title: "Gender",
@@ -74,6 +76,9 @@ class FormExample extends Component {
                 break;
               case "number":
                 Elem = NumberInput;
+                break;
+              case "date":
+                Elem = DateInput;
                 break;
               case "select":
                 Elem = SelectInput;
