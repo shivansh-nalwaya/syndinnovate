@@ -51,7 +51,7 @@ class Login extends Component {
                 Session.login({ email, password })
                   .then(res => {
                     this.loading = false;
-                    Actions.jump("admin");
+                    Actions.jump("page");
                   })
                   .catch(err => {
                     this.loading = false;

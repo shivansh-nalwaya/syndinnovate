@@ -27,8 +27,7 @@ class Dashboard extends Component {
       loading: true,
       all: []
     });
-    const c = new Categories();
-    c.all().then(res => {
+    Categories.all().then(res => {
       this.all = res;
       this.loading = false;
     });
