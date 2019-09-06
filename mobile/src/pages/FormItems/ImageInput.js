@@ -1,12 +1,27 @@
-import { Input, Label, Text, Icon } from "native-base";
+import { Icon, Label, Text } from "native-base";
 import React, { Component } from "react";
-import { View, Image, TouchableOpacity, Platform } from "react-native";
+import { Image, Platform, TouchableOpacity, View } from "react-native";
 import ImagePicker from "react-native-image-picker";
-
 import styled from "styled-components";
 
 const RedText = styled(Text)`
   color: red;
+`;
+
+const OuterView = styled(View)`
+  border-width: 1;
+  border-color: "#22CCC2";
+  padding: 2;
+  width: 150;
+  height: 150;
+  flex: 1;
+  justify-content: "center";
+  align-items: "center";
+`;
+
+const InImage = styled(Image)`
+  width: 146px;
+  height: 146px;
 `;
 
 class ImageInput extends Component {
@@ -57,30 +72,13 @@ class Uploader extends Component {
     return (
       <TouchableOpacity onPress={this.props.onPress}>
         <View style={{ margin: 4 }}>
-          <View
-            style={{
-              borderWidth: 1,
-              borderColor: "#22CCC2",
-              padding: 2,
-              width: 150,
-              height: 150,
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
+          <OuterView>
             {this.props.value ? (
-              <Image
-                source={{ uri: this.props.value }}
-                style={{
-                  width: 146,
-                  height: 146
-                }}
-              />
+              <InImage source={{ uri: this.props.value }} />
             ) : (
               <Icon name="md-add" style={{ fontSize: 80, color: "#22CCC2" }} />
             )}
-          </View>
+          </OuterView>
         </View>
       </TouchableOpacity>
     );
