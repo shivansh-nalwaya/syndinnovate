@@ -1,14 +1,23 @@
 import React, { Component, Fragment } from "react";
-import {
-  Modal,
-  TouchableHighlight,
-  View,
-  Alert,
-  ScrollView
-} from "react-native";
+import { Modal, View, Alert, ScrollView } from "react-native";
 import { decorate, observable } from "mobx";
 import { observer } from "mobx-react";
-import { Container, Button, Text } from "native-base";
+import {
+  Container,
+  Button,
+  Text,
+  Input,
+  Picker,
+  Form,
+  Item,
+  Label,
+  Radio,
+  Header,
+  Body,
+  Title,
+  Left,
+  Textarea
+} from "native-base";
 import styled from "styled-components";
 import TextInput from "./FormItems/TextInput";
 import SelectInput from "./FormItems/SelectInput";
@@ -19,14 +28,17 @@ import ImageInput from "./FormItems/ImageInput";
 import TextareaInput from "./FormItems/TextareaInput";
 import _ from "lodash";
 
-const PaddedContent = styled(Container)``;
+const PaddedContent = styled(Container)`
+  background-color: ${props =>
+    props.backgrounded ? "rgba(0, 0, 0, 0.5)" : "white"};
+`;
 
 const StyledView = styled(View)`
   padding: 10px;
 `;
 
 const BlackFooter = styled(View)`
-  background-color: black;
+  background-color: ${props => (props.light ? "#898989" : "black")};
   padding: 10px;
   display: flex;
   flex-direction: row-reverse;
@@ -42,117 +54,192 @@ const FooterText = styled(Text)`
   color: white;
 `;
 
+const StyledModal = styled(View)`
+  margin: 50px;
+  margin-top: 100px;
+  background-color: white;
+  z-index: 100;
+  height: 400px;
+`;
+
+class InnerModal extends Component {
+  title = "";
+  type = "text";
+  required = false;
+  options = "";
+
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: "space-between" }}>
+        <Header style={{ backgroundColor: "black" }}>
+          <Body>
+            <Title>Add Field</Title>
+          </Body>
+        </Header>
+        <Form>
+          <Item>
+            <Label>Title</Label>
+            <Input
+              defaultValue={this.title}
+              onChangeText={e => (this.title = e)}
+              placeholder="Title"
+            />
+          </Item>
+          <Item>
+            <Label>Type</Label>
+            <Picker
+              mode="dropdown"
+              placeholder="Type"
+              defaultValue={this.type}
+              onValueChange={e => (this.type = e)}
+            >
+              <Picker.Item label="Text" value="text" />
+              <Picker.Item label="Number" value="number" />
+              <Picker.Item label="Date" value="date" />
+              <Picker.Item label="Image" value="image" />
+              <Picker.Item label="Dropdown" value="select" />
+              <Picker.Item label="Dropdown (Multiple)" value="multi-select" />
+              <Picker.Item label="Text Area" value="textarea" />
+            </Picker>
+          </Item>
+          <Item>
+            <Label>Required</Label>
+            <View
+              style={{
+                paddingVertical: 10,
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "space-around"
+              }}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <Radio selected={this.required} />
+                <Text> Yes</Text>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <Radio selected={!this.required} />
+                <Text> No</Text>
+              </View>
+            </View>
+          </Item>
+          <Item>
+            <Label>Options</Label>
+            <Textarea
+              onChangeText={e => (this.options = e)}
+              placeholder="Options (Comma seperated)"
+            />
+          </Item>
+        </Form>
+        <BlackFooter>
+          <Button
+            onPress={() => {
+              this.props.onAdd({
+                type: this.type,
+                title: this.title,
+                required: this.required,
+                options: this.options.split(",")
+              });
+              this.props.hideModal();
+            }}
+          >
+            <FooterText>ADD</FooterText>
+          </Button>
+          <Button onPress={() => this.props.hideModal()}>
+            <FooterText>CANCEL</FooterText>
+          </Button>
+        </BlackFooter>
+      </View>
+    );
+  }
+}
+
+decorate(InnerModal, {
+  required: observable
+});
+
+const ModalForm = observer(InnerModal);
+
 class FormExample extends Component {
   items = [
     { type: "text", title: "Name", required: true },
-    { type: "number", title: "Contact", required: true },
-    { type: "date", title: "Date of birth", required: true },
-    { type: "textarea", title: "Address", required: true },
-    { type: "image", title: "Aadhaar Image", required: true },
-    {
-      type: "select",
-      title: "Gender",
-      required: true,
-      options: ["Male", "Female"]
-    },
-    {
-      type: "multi-select",
-      title: "Langauges",
-      required: false,
-      options: ["English", "Hindi"]
-    }
+    { type: "number", title: "Contact", required: true }
   ];
 
   modalVisible = false;
 
-  setModalVisible(visible) {
+  setModalVisible = visible => {
     this.modalVisible = visible;
-  }
+  };
 
   render() {
     return (
-      <Fragment>
+      <PaddedContent backgrounded={this.modalVisible}>
         <Modal
           animationType="fade"
           transparent={true}
           visible={this.modalVisible}
           onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
+            this.setModalVisible(false);
           }}
         >
-          <View
-            style={{
-              margin: 50,
-              backgroundColor: "green",
-              elevation: 1,
-              height: 300
-            }}
-          >
-            <View>
-              <Text>Hello World!</Text>
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.modalVisible);
-                }}
-              >
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
+          <StyledModal>
+            <ModalForm
+              hideModal={() => this.setModalVisible(false)}
+              onAdd={val => this.items.push(val)}
+            />
+          </StyledModal>
         </Modal>
-        <PaddedContent>
-          <ScrollView>
-            {this.items.map((item, index) => {
-              let Elem = TextInput;
-              let customProps = {
-                item
-              };
-              switch (item.type) {
-                case "text":
-                  Elem = TextInput;
-                  break;
-                case "number":
-                  Elem = NumberInput;
-                  break;
-                case "date":
-                  Elem = DateInput;
-                  break;
-                case "image":
-                  Elem = ImageInput;
-                  break;
-                case "select":
-                  Elem = SelectInput;
-                  customProps["options"] = item.options;
-                  break;
-                case "multi-select":
-                  Elem = CheckboxInput;
-                  customProps["options"] = item.options;
-                  break;
-                case "textarea":
-                  Elem = TextareaInput;
-                  break;
-              }
-              return (
-                <StyledView key={index}>
-                  <Elem {...customProps}></Elem>
-                </StyledView>
-              );
-            })}
-          </ScrollView>
-          <BlackFooter>
-            <FooterButton bordered onPress={this.setModalVisible(true)}>
-              <FooterText>ADD FIELD</FooterText>
-            </FooterButton>
-            <FooterButton bordered onPress={this.nextIndex}>
-              <FooterText>SAVE</FooterText>
-            </FooterButton>
-          </BlackFooter>
-        </PaddedContent>
-      </Fragment>
+        <ScrollView>
+          {this.items.map((item, index) => {
+            let Elem = TextInput;
+            let customProps = {
+              item
+            };
+            switch (item.type) {
+              case "text":
+                Elem = TextInput;
+                break;
+              case "number":
+                Elem = NumberInput;
+                break;
+              case "date":
+                Elem = DateInput;
+                break;
+              case "image":
+                Elem = ImageInput;
+                break;
+              case "select":
+                Elem = SelectInput;
+                customProps["options"] = item.options;
+                break;
+              case "multi-select":
+                Elem = CheckboxInput;
+                customProps["options"] = item.options;
+                break;
+              case "textarea":
+                Elem = TextareaInput;
+                break;
+            }
+            return (
+              <StyledView key={index}>
+                <Elem {...customProps}></Elem>
+              </StyledView>
+            );
+          })}
+        </ScrollView>
+        <BlackFooter>
+          <FooterButton bordered onPress={() => this.setModalVisible(true)}>
+            <FooterText>ADD FIELD</FooterText>
+          </FooterButton>
+          <FooterButton bordered onPress={this.nextIndex}>
+            <FooterText>SAVE</FooterText>
+          </FooterButton>
+        </BlackFooter>
+      </PaddedContent>
     );
   }
 }
 
-decorate(FormExample, { modalVisible: observable });
+decorate(FormExample, { modalVisible: observable, items: observable });
 
 export default observer(FormExample);

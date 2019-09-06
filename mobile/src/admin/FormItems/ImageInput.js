@@ -9,7 +9,7 @@ const RedText = styled(Text)`
 
 const OuterView = styled(View)`
   border-width: 1px;
-  border-color: #22ccc2;
+  border-color: #787878;
   padding: 2px;
   width: 150px;
   height: 150px;
@@ -47,7 +47,7 @@ class Uploader extends Component {
             {this.props.value ? (
               <InImage source={{ uri: this.props.value }} />
             ) : (
-              <Icon name="md-add" style={{ fontSize: 80, color: "#22CCC2" }} />
+              <Icon name="md-add" style={{ fontSize: 80, color: "#787878" }} />
             )}
           </OuterView>
         </View>
